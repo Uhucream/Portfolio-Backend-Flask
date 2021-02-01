@@ -5,7 +5,7 @@ from datetime import datetime
 from psycopg2.extras import DictCursor
 
 
-@api.route('/post_test', methods=['POST'])
+@api.route('/submit_post', methods=['POST'])
 def post_test():
 
     request_dic = json.loads(request.get_data())
