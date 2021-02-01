@@ -1,5 +1,5 @@
 from apiv1 import api, db_connection, cursor
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect
 import json
 from datetime import datetime
 from psycopg2.extras import DictCursor
