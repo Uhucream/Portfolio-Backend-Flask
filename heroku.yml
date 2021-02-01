@@ -1,0 +1,7 @@
+setup:
+  config:
+    FLASK_CONFIG: production
+
+build:
+  docker:
+    web: Dockerfile
