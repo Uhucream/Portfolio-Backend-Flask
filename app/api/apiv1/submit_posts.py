@@ -1,35 +1,26 @@
-from apiv1 import api, db_connection, cursor
+from apiv1 import api
 from flask import Flask, request, render_template, redirect
 import json
-from datetime import datetime
-from psycopg2.extras import DictCursor
+from models import models
+from database import db
 
 
 @api.route('/submit_post', methods=['POST'])
-def post_test():
+def submit_post():
 
     request_dic = json.loads(request.get_data())
-
-    with db_connection as connection:
-      with connection.cursor(cursor_factory=DictCursor) as cur:
-        cur.execute(
-        "INSERT INTO daily_reports (title, created_at, updated_at, body_text) VALUES ('{}', '{}', '{}', '{}');".format(request_dic['title'], str(datetime.now()), str(datetime.now()), request_dic['body_text']))
-    connection.commit()
-
-    with db_connection as connection:
-      with connection.cursor(cursor_factory=DictCursor) as cur:
-        cur.execute("SELECT * FROM daily_reports ORDER BY id DESC LIMIT 1;")
-        row = cur.fetchall()
-        result_list = []
-        for item in row:
-          result_list.append(dict(item))
-
-    result_dict = result_list[0]
+    post_content = models.DailyReports(
+        request_dic['title'], request_dic['body_text'])
+    db.session.add(post_content)
+    db.session.commit()
+    
+    result_dict = post_content.to_dict()
+    result_dict['uuid'] = str(result_dict['uuid'])
     result_dict['created_at'] = str(result_dict['created_at'])
     result_dict['updated_at'] = str(result_dict['updated_at'])
 
     import create_response
-    response_json = json.dumps(result_dict)
+    response_json = json.dumps(str(result_dict), ensure_ascii=False)
     content = response_json
     status_code = 200
     mimetype = 'application/json'

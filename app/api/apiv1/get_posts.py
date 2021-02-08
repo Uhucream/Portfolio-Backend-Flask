@@ -1,22 +1,17 @@
-from apiv1 import api, db_connection, cursor
+from apiv1 import api
 from flask import Flask, request, render_template, redirect
-import psycopg2.extras
 import json
- 
+from models import models
+from database import db
+
 
 @api.route('/posts', methods=['GET'])
-def get_all_post():
+def get_all_posts():
 
-  with db_connection as connection:
-    with connection.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
-        cur.execute("SELECT * FROM daily_reports;")
-        row = cur.fetchall()
-        result_list = []
-        for item in row:
-            result_list.append(dict(item))
+    record_list = models.DailyReports.query.all()
 
-    if len(result_list) == 0:
-        response_json = json.dumps({'message': 'Not Found'})
+    if len(record_list) == 0:
+        response_json = json.dumps({'message': 'No Posts Found'})
         import create_response
         content = response_json
         status_code = 404
@@ -26,20 +21,16 @@ def get_all_post():
 
         return response
     else:
-        final_result_list = []
-        for dic in result_list:
-            id_value = dic['id']
-            dic.pop('id')
-            final_result_list.append((id_value, dic))
+        dict_list = []
+        for elem in record_list:
+            raw_dict = elem.__dict__
+            raw_dict.pop('_sa_instance_state')
+            raw_dict['uuid'] = str(raw_dict['uuid'])
+            raw_dict['created_at'] = str(raw_dict['created_at'])
+            raw_dict['updated_at'] = str(raw_dict['updated_at'])
+            dict_list.append(raw_dict)
 
-        result_dict = dict(final_result_list)
-        for dic in result_dict:
-            result_dict[dic]['created_at'] = str(
-                result_dict[dic]['created_at'])
-            result_dict[dic]['updated_at'] = str(
-                result_dict[dic]['updated_at'])
-
-        response_json = json.dumps(result_dict)
+        response_json = json.dumps(dict_list, ensure_ascii=False)
         import create_response
         content = response_json
         status_code = 200
@@ -53,15 +44,9 @@ def get_all_post():
 @api.route('/post/<id>', methods=['GET'])
 def get_one_post(id=None):
 
-    with db_connection as connection:
-        with connection.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
-            cur.execute("SELECT * FROM daily_reports WHERE id = '{}';".format(id))
-            row = cur.fetchall()
-            result_list = []
-            for item in row:
-                result_list.append(dict(item))
+    record_list = models.DailyReports.query.filter_by(id=id).all()
 
-    if len(result_list) == 0:
+    if len(record_list) == 0:
         response_json = json.dumps({'message': 'Not Found'})
         import create_response
         content = response_json
@@ -72,16 +57,18 @@ def get_one_post(id=None):
 
         return response
     else:
-        result_dict = result_list[0]
+        result_dict = record_list[0].__dict__
+        result_dict.pop('_sa_instance_state')
+        result_dict['uuid'] = str(result_dict['uuid'])
         result_dict['created_at'] = str(result_dict['created_at'])
         result_dict['updated_at'] = str(result_dict['updated_at'])
 
-        response_json = json.dumps(result_dict)
+        response_json = json.dumps(result_dict, ensure_ascii=False)
         import create_response
         content = response_json
         status_code = 200
         mimetype = 'application/json'
         response = create_response.create_response(
-        content, status_code, mimetype)
+            content, status_code, mimetype)
 
         return response
