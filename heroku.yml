@@ -1,7 +1,3 @@
-setup:
-  config:
-    RDS_HOSTNAME: $DATABASE_URL
-
 build:
   docker:
     web: Dockerfile
