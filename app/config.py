@@ -1,4 +1,5 @@
 import os
+from instance.postgresql import SQLALCHEMY_DATABASE_URI as DATABASE_URI
 basedir = os.path.abspath(os.path.dirname('__file__'))
 
 class Config:
@@ -11,8 +12,11 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     ENV='development'
-    # SERVER_NAME="0.0.0.0"
     DEBUG = True
+    SECRET_KEY = str(os.urandom(24))
+    SQLALCHEMY_DATABASE_URI = DATABASE_URI
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_ECHO = True
     
 
 class TestingConfig(Config):
@@ -25,5 +29,5 @@ config = {
     'testing': TestingConfig,
     'production': ProductionConfig,
 
-    'default': DevelopmentConfig
+    'default': ProductionConfig
     }

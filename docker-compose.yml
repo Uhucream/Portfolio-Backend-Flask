@@ -7,13 +7,12 @@ services:
     container_name: portfolio-db
     volumes:
       - database:/var/lib/postgresql/data
-      - ./db:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
     restart: always
     environment:
-      POSTGRES_USER: 'dev'
-      POSTGRES_PASSWORD: 'pass'
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 'develop'
 
   flask:
     build: 
@@ -25,13 +24,16 @@ services:
     volumes:
       - ./app:/usr/src/app/
     environment:
-      PROXY_HOST: ${PROXY_HOST}
+      FLASK_APP: 'application:app'
       FLASK_CONFIG: 'development'
+      RDS_DB_NAME: portfolio
+      RDS_HOSTNAME: 'db'
+      RDS_USERNAME: postgres
     ports:
       - 5000:5000
     expose:
       - 5000
-    command: gunicorn -c gunicorn_settings.py application:app
+    command: /bin/sh -c "./init_db.sh && flask db migrate && flask db upgrade && gunicorn -c gunicorn_settings.py application:app"
     depends_on:
       - db
   
