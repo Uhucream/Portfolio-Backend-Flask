@@ -1,6 +1,6 @@
 setup:
   config:
-    RDS_HOSTNAME: ${DATABASE_URL}
+    RDS_HOSTNAME: $DATABASE_URL
 
 build:
   docker:

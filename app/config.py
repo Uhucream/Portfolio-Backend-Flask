@@ -6,6 +6,8 @@ class Config:
     ENV='production'
     SQLALCHEMY_DATABASE_URI = DATABASE_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SECRET_KEY = str(os.urandom(24))
+    SQLALCHEMY_ECHO = True
     DEBUG=False
     TESTING=False
 
@@ -15,8 +17,6 @@ class ProductionConfig(Config):
 class DevelopmentConfig(Config):
     ENV='development'
     DEBUG = True
-    SECRET_KEY = str(os.urandom(24))
-    SQLALCHEMY_ECHO = True
     
 
 class TestingConfig(Config):
