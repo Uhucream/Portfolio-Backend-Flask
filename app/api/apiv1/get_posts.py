@@ -26,8 +26,8 @@ def get_all_posts():
             raw_dict = elem.__dict__
             raw_dict.pop('_sa_instance_state')
             raw_dict['uuid'] = str(raw_dict['uuid'])
-            raw_dict['created_at'] = str(raw_dict['created_at'])
-            raw_dict['updated_at'] = str(raw_dict['updated_at'])
+            raw_dict['created_at'] = raw_dict['created_at'].isoformat()
+            raw_dict['updated_at'] = raw_dict['updated_at'].isoformat()
             dict_list.append(raw_dict)
 
         response_json = json.dumps(dict_list, ensure_ascii=False)
