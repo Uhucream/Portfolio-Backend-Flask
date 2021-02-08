@@ -60,8 +60,8 @@ def get_one_post(id=None):
         result_dict = record_list[0].__dict__
         result_dict.pop('_sa_instance_state')
         result_dict['uuid'] = str(result_dict['uuid'])
-        result_dict['created_at'] = str(result_dict['created_at'])
-        result_dict['updated_at'] = str(result_dict['updated_at'])
+        result_dict['created_at'] = result_dict['created_at'].isoformat()
+        result_dict['updated_at'] = result_dict['updated_at'].isoformat()
 
         response_json = json.dumps(result_dict, ensure_ascii=False)
         import create_response
