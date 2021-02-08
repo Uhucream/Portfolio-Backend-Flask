@@ -1,6 +1,6 @@
 setup:
   config:
-    FLASK_CONFIG: production
+    RDS_HOSTNAME: ${DATABASE_URL}
 
 build:
   docker:

@@ -4,6 +4,8 @@ basedir = os.path.abspath(os.path.dirname('__file__'))
 
 class Config:
     ENV='production'
+    SQLALCHEMY_DATABASE_URI = DATABASE_URI
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     DEBUG=False
     TESTING=False
 
@@ -14,8 +16,6 @@ class DevelopmentConfig(Config):
     ENV='development'
     DEBUG = True
     SECRET_KEY = str(os.urandom(24))
-    SQLALCHEMY_DATABASE_URI = DATABASE_URI
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_ECHO = True
     
 
