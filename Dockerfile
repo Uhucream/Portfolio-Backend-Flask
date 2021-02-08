@@ -9,4 +9,4 @@ WORKDIR /usr/src/app/
 
 RUN pip install -r requirements.txt
 
-CMD ["gunicorn", "-c", "gunicorn_settings.py", "application:app"]
+CMD ["./init_db.sh", "flask", "db", "migrate", "flask", "db", "upgrade", "gunicorn", "-c", "gunicorn_settings.py", "application:app"]
