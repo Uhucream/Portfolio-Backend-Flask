@@ -38,7 +38,7 @@
       "entryPoint": [
         "/bin/sh",
         "-c",
-        "pip install -r /usr/src/app/requirements.txt"
+        "pip install -r ./requirements.txt"
       ],
       "command": ["/bin/bash", "-c", "flask db migrate && flask db upgrade && gunicorn -c gunicorn_settings.py application:app"]
     }
