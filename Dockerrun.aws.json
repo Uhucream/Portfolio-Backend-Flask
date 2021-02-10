@@ -16,13 +16,19 @@
   ],
   "containerDefinitions": [
     {
-      "name": "portfolio-flask",
+      "name": "flask",
       "image": "python:3.8",
       "essential": true,
       "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
       "mountPoints": [
         {
-          "sourceVolume": "app",
+          "sourceVolume": "flask-src",
           "containerPath": "/usr/src/app",
           "readOnly": true
         }
