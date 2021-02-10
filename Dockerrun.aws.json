@@ -25,6 +25,11 @@
           "sourceVolume": "flask-src",
           "containerPath": "/usr/src/app",
           "readOnly": true
+        },
+        {
+          "sourceVolume": "/var/app/current/requirements.txt",
+          "containerPath": "/usr/src/app/requirements.txt",
+          "readOnly": true
         }
       ],
        "logConfiguration": {
