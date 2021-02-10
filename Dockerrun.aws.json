@@ -4,7 +4,7 @@
     {
       "name": "flask-src",
       "host": {
-        "sourcePath": "/var/app/current/app"
+        "sourcePath": "/var/app/current/"
       }
     }
   ],
@@ -23,12 +23,7 @@
       "mountPoints": [
         {
           "sourceVolume": "flask-src",
-          "containerPath": "/usr/src/app",
-          "readOnly": true
-        },
-        {
-          "sourceVolume": "/var/app/current/requirements.txt",
-          "containerPath": "/usr/src/app/requirements.txt",
+          "containerPath": "/usr/src/",
           "readOnly": true
         }
       ],
