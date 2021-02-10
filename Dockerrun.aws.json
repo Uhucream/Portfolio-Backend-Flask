@@ -38,9 +38,9 @@
       "entryPoint": [
         "/bin/sh",
         "-c",
-        "pip install -r /usr/src/requirements.txt && chmod +x /usr/src/app/init_db.sh"
+        "pip install -r /usr/src/requirements.txt"
       ],
-      "command": ["/bin/bash", "-c", "/usr/src/app/init_db.sh && flask db migrate && flask db upgrade && gunicorn -c gunicorn_settings.py application:app"]
+      "command": ["/bin/bash", "-c", "flask db migrate && flask db upgrade && gunicorn -c gunicorn_settings.py application:app"]
     }
   ]
 }
