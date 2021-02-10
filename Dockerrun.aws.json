@@ -37,12 +37,7 @@
         }
       ],
       "workingDirectory": "/usr/src/app",
-      "entryPoint": [
-        "/bin/sh",
-        "-c",
-        "pip install -r /var/app/current/requirements.txt"
-      ],
-      "command": ["/bin/bash", "-c", "flask db migrate && flask db upgrade && gunicorn -c /usr/src/app/gunicorn_settings.py /usr/src/app/application:app"]
+      "command": ["/bin/bash", "-c", "pip install -r /usr/src/requirements.txt && flask db migrate && flask db upgrade && gunicorn -c /usr/src/app/gunicorn_settings.py /usr/src/app/application:app"]
     },
     {
       "name": "nginx-proxy",
