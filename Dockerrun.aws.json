@@ -27,7 +27,8 @@
           "readOnly": true
         }
       ],
-      "workingDirectory": "/usr/src/app"
+      "workingDirectory": "/usr/src/app",
+      "command": ["sh", "-c", "flask db migrate && flask db upgrade && gunicorn -c gunicorn_settings.py application:app"]
     }
   ]
 }
