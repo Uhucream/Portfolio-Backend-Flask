@@ -6,6 +6,12 @@
       "host": {
         "sourcePath": "/var/app/current/"
       }
+    },
+    {
+      "name": "nginx-proxy-conf",
+      "host": {
+        "sourcePath": "/var/app/current/docker/web"
+      }
     }
   ],
   "containerDefinitions": [
@@ -13,34 +19,56 @@
       "name": "flask",
       "image": "python:3.8",
       "essential": true,
-      "memory": 128,
+      "memory": 256,
       "portMappings": [
         {
-          "hostPort": 8000,
-          "containerPort": 8000
+          "hostPort": 5000,
+          "containerPort": 5000
         }
       ],
       "mountPoints": [
         {
           "sourceVolume": "flask-src",
-          "containerPath": "/usr/src/",
-          "readOnly": true
+          "containerPath": "/usr/src/"
+        },
+        {
+            "sourceVolume": "awseb-logs-flask",
+            "containerPath": "/var/log/flask"
         }
       ],
-       "logConfiguration": {
-         "logDriver": "awslogs",
-         "options": {
-           "awslogs-region": "us-west-2",
-           "awslogs-group": "eb-flask-docker-log"
-         }
-       },
       "workingDirectory": "/usr/src/app",
       "entryPoint": [
         "/bin/sh",
         "-c",
-        "pip install -r /usr/src/requirements.txt"
+        "pip install -r /var/app/current/requirements.txt"
       ],
-      "command": ["/bin/bash", "-c", "flask db migrate && flask db upgrade && gunicorn -c gunicorn_settings.py application:app"]
+      "command": ["/bin/bash", "-c", "flask db migrate && flask db upgrade && gunicorn -c /usr/src/app/gunicorn_settings.py /usr/src/app/application:app"]
+    },
+    {
+      "name": "nginx-proxy",
+      "image": "nginx",
+      "essential": true,
+      "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "flask"
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "nginx-proxy-conf",
+          "containerPath": "/etc/nginx/conf.d/",
+          "readOnly": true
+        },
+        {
+          "sourceVolume": "awseb-logs-nginx-proxy",
+          "containerPath": "/var/log/nginx"
+        }
+      ]
     }
   ]
 }
