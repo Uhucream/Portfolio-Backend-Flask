@@ -28,7 +28,7 @@
         }
       ],
       "workingDirectory": "/usr/src/app",
-      "command": ["./startup.sh"]
+      "command": ["sh", "-c", "chmod +x ./init_db.sh && ./init_db.sh && flask db migrate && flask db upgrade && gunicorn -c gunicorn_settings.py application:app"]
     }
   ]
 }
