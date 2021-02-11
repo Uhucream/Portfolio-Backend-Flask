@@ -1,9 +1,9 @@
 FROM nginx:1.16-alpine
 
-ADD nginx.conf /etc/nginx/nginx.conf
+ADD nginx.conf /etc/nginx/default.conf
 
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+RUN echo "daemon off;" >> /etc/nginx/default.conf
 
 EXPOSE 80
 
-CMD ["/usr/sbin/nginx", "-c", "/etc/nginx/nginx.conf"]
+CMD ["/usr/sbin/nginx", "-c", "/etc/nginx/default.conf"]

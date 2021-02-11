@@ -60,8 +60,7 @@
       "mountPoints": [
         {
           "sourceVolume": "nginx-conf",
-          "containerPath": "/etc/nginx/conf.d/nginx.conf",
-          "readOnly": true
+          "containerPath": "/etc/nginx/conf.d/defalut.conf"
         },
         {
           "sourceVolume": "awseb-logs-nginx",
