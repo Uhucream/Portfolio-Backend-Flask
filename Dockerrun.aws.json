@@ -26,6 +26,12 @@
           "containerPort": 8000
         }
       ],
+      "environment": [
+        {
+          "name": "PORT",
+          "value": 8000
+        }
+      ],
       "mountPoints": [
         {
           "sourceVolume": "flask-src",
