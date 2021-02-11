@@ -48,7 +48,7 @@
     },
     {
       "name": "nginx",
-      "image": "633999724589.dkr.ecr.us-west-2.amazonaws.com/portfolio-flask-backend_web",
+      "image": "nginx:1.16-alpine",
       "essential": true,
       "memory": 256,
       "portMappings": [
