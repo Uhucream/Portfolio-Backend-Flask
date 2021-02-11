@@ -50,10 +50,10 @@
          }
        },
       "workingDirectory": "/usr/src/app",
-      "command": ["/bin/bash", "-c", "flask db migrate && flask db upgrade && gunicorn -c /usr/src/app/gunicorn_settings.py /usr/src/app/application:app"]
+      "command": ["/bin/sh", "-c", "flask db migrate && flask db upgrade && gunicorn -c /usr/src/app/gunicorn_settings.py /usr/src/app/application:app"]
     },
     {
-      "name": "portfolio-nginx",
+      "name": "nginx",
       "image": "nginx:1.16-alpine",
       "essential": true,
       "memory": 256,
@@ -76,17 +76,20 @@
           "readOnly": true
         },
         {
-          "sourceVolume": "awseb-logs-portfolio-nginx",
+          "sourceVolume": "awseb-logs-nginx",
           "containerPath": "/var/log/nginx"
         }
       ],
-       "logConfiguration": {
-         "logDriver": "awslogs",
-         "options": {
-           "awslogs-region": "us-west-2",
-           "awslogs-group": "eb-nginx-docker-log"
-         }
-       }
+      "links": [
+        "php-app"
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-region": "us-west-2",
+          "awslogs-group": "eb-nginx-docker-log"
+        }
+      }
     }
   ]
 }

@@ -18,7 +18,7 @@ services:
     build: 
       context: .
       dockerfile: docker/python/Dockerfile
-    image: 633999724589.dkr.ecr.us-west-2.amazonaws.com/portfolio-flask-backend_flask:latest
+    image: portfolio-flask-backend_flask:latest
     container_name: portfolio-flask
     tty: true
     working_dir: /usr/src/app/
