@@ -51,6 +51,12 @@
       "image": "633999724589.dkr.ecr.us-west-2.amazonaws.com/portfolio-flask-backend_web",
       "essential": true,
       "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
       "dependsOn": [
         {
           "containerName": "flask",
@@ -60,7 +66,8 @@
       "mountPoints": [
         {
           "sourceVolume": "nginx-conf",
-          "containerPath": "/etc/nginx/conf.d/"
+          "containerPath": "/etc/nginx/conf.d/",
+          "readOnly": true
         },
         {
           "sourceVolume": "awseb-logs-nginx",
