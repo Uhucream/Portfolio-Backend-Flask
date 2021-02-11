@@ -66,7 +66,7 @@
       "mountPoints": [
         {
           "sourceVolume": "nginx-conf",
-          "containerPath": "/etc/nginx/conf.d/",
+          "containerPath": "/etc/nginx/conf.d",
           "readOnly": true
         },
         {
