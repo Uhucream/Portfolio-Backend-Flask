@@ -18,8 +18,17 @@ services:
       RDS_DB_NAME: ${RDS_DB_NAME}
       FLASK_APP: '/usr/src/app/application:app'
     ports:
-      - 8000:8000
-    expose:
-      - 8000
-    command: /bin/sh -c "./init_db.sh && flask db migrate && flask db upgrade && gunicorn -c gunicorn_settings.py application:app"
+      - 5000:5000
+    command: /bin/sh -c "/usr/src/app/init_db.sh && flask db migrate && flask db upgrade && gunicorn -c gunicorn_settings.py application:app"
   
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    container_name: portfolio-web
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+    depends_on:
+      - flask
