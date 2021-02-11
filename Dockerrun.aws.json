@@ -77,7 +77,6 @@
       "links": [
         "flask"
       ],
-      "command": ["/usr/sbin/nginx", "-c", "/etc/nginx/nginx.conf"],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
