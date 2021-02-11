@@ -30,6 +30,13 @@
             "containerPath": "/var/log/flask"
         }
       ],
+       "logConfiguration": {
+         "logDriver": "awslogs",
+         "options": {
+           "awslogs-region": "us-west-2",
+           "awslogs-group": "eb-flask-docker-log"
+         }
+       },
       "workingDirectory": "/usr/src/app",
       "command": ["/bin/bash", "-c", "flask db migrate && flask db upgrade && gunicorn -c /usr/src/app/gunicorn_settings.py /usr/src/app/application:app"]
     }

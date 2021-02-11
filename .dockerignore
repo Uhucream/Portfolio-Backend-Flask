@@ -1,0 +1,10 @@
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+/public/uploads
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/.env
+.idea

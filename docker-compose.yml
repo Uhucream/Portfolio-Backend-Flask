@@ -25,11 +25,13 @@ services:
     volumes:
       - ./app:/usr/src/app/
     environment:
-      FLASK_APP: 'application:app'
+      RDS_HOSTNAME: ${RDS_HOSTNAME}
+      RDS_PORT: ${RDS_PORT}
+      RDS_USERNAME: ${RDS_USERNAME}
+      RDS_PASSWORD: ${RDS_PASSWORD}
+      RDS_DB_NAME: ${RDS_DB_NAME}
+      FLASK_APP: '/usr/src/app/application:app'
       FLASK_CONFIG: 'development'
-      RDS_DB_NAME: portfolio
-      RDS_HOSTNAME: 'db'
-      RDS_USERNAME: postgres
     ports:
       - 5000:5000
     expose:
