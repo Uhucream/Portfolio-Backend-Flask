@@ -48,7 +48,7 @@
     },
     {
       "name": "nginx",
-      "image": "nginx:1.16-alpine",
+      "image": "nginx",
       "essential": true,
       "memory": 256,
       "portMappings": [
