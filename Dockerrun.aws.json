@@ -81,7 +81,7 @@
         }
       ],
       "links": [
-        "php-app"
+        "flask"
       ],
       "logConfiguration": {
         "logDriver": "awslogs",
