@@ -12,7 +12,6 @@
     {
       "name": "flask",
       "image": "633999724589.dkr.ecr.us-west-2.amazonaws.com/portfolio-flask-backend_flask:latest",
-      "essential": true,
       "environment": [
         {
           "name": "FLASK_APP",
