@@ -1,7 +1,0 @@
-CREATE TABLE daily_reports (
-  id SERIAL PRIMARY KEY,
-  title CHAR VARYING,
-  created_at TIMESTAMP WITH TIME ZONE NOT NULL,
-  updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
-  body_text CHAR VARYING
-);
