@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
 
-./init_db.sh
-flask db migrate
-flask db upgrade
+/usr/src/app/migrate.sh
 gunicorn -c gunicorn_settings.py application:app

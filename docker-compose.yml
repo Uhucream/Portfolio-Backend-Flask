@@ -24,6 +24,7 @@ services:
     working_dir: /usr/src/app/
     volumes:
       - ./app:/usr/src/app/
+      - ./log/gunicorn.log:/var/log/flask/gunicorn.log
     environment:
       RDS_HOSTNAME: ${RDS_HOSTNAME}
       RDS_PORT: ${RDS_PORT}
@@ -36,7 +37,7 @@ services:
       - 5000:5000
     expose:
       - 5000
-    command: /bin/sh -c "./init_db.sh && flask db migrate && flask db upgrade && gunicorn -c gunicorn_settings.py application:app"
+    command: /bin/sh -c "/usr/src/app/migrate.sh && gunicorn -c gunicorn_settings.py application:app"
     depends_on:
       - db
   
