@@ -48,7 +48,7 @@
     },
     {
       "name": "nginx",
-      "image": "nginx",
+      "image": "633999724589.dkr.ecr.us-west-2.amazonaws.com/portfolio-flask-backend_web:latest",
       "essential": true,
       "memory": 128,
       "portMappings": [
