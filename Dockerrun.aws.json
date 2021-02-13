@@ -47,7 +47,7 @@
          }
        },
       "workingDirectory": "/usr/src/app",
-      "command": ["/bin/bash", "-c", "gunicorn -c gunicorn_settings.py application:app"]
+      "command": ["/bin/bash", "-c", "flask db upgrade && gunicorn -c gunicorn_settings.py application:app"]
     }
   ]
 }
