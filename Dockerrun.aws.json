@@ -63,8 +63,8 @@
       "memory": 128,
       "portMappings": [
         {
-          "hostPort": 81,
-          "containerPort": 81
+          "hostPort": 80,
+          "containerPort": 80
         }
       ],
       "dependsOn": [
