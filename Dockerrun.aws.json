@@ -19,7 +19,7 @@
       "name": "flask",
       "image": "633999724589.dkr.ecr.us-west-2.amazonaws.com/portfolio-flask-backend_flask:latest",
       "essential": true,
-      "memory": 256,
+      "memory": 128,
       "portMappings": [
         {
           "hostPort": 5000,
@@ -50,11 +50,11 @@
       "name": "nginx",
       "image": "nginx",
       "essential": true,
-      "memory": 256,
+      "memory": 128,
       "portMappings": [
         {
-          "hostPort": 80,
-          "containerPort": 80
+          "hostPort": 81,
+          "containerPort": 81
         }
       ],
       "dependsOn": [
