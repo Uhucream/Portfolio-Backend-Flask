@@ -6,22 +6,19 @@
       "host": {
         "sourcePath": "/var/app/current/app"
       }
+    },
+    {
+      "name": "nginx-conf",
+      "host": {
+        "sourcePath": "/var/app/current/conf.d"
+      }
     }
   ],
   "containerDefinitions": [
     {
       "name": "flask",
       "image": "633999724589.dkr.ecr.us-west-2.amazonaws.com/portfolio-flask-backend_flask:latest",
-      "environment": [
-        {
-          "name": "FLASK_APP",
-          "value": "application:app"
-        },
-        {
-          "name": "FLASK_CONFIG",
-          "value": "development"
-        }
-      ],
+      "essential": true,
       "memory": 128,
       "portMappings": [
         {
@@ -47,7 +44,46 @@
          }
        },
       "workingDirectory": "/usr/src/app",
-      "command": ["/bin/bash", "-c", "flask db upgrade && gunicorn -c gunicorn_settings.py application:app"]
+      "command": ["/bin/sh", "-c", "flask db upgrade && gunicorn -c /usr/src/app/gunicorn_settings.py /usr/src/app/application:app"]
+    },
+    {
+      "name": "nginx",
+      "image": "633999724589.dkr.ecr.us-west-2.amazonaws.com/portfolio-flask-backend_web:latest",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "dependsOn": [
+        {
+          "containerName": "flask",
+          "condition": "START"
+        }
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "nginx-conf",
+          "containerPath": "/etc/nginx/conf.d",
+          "readOnly": true
+        },
+        {
+          "sourceVolume": "awseb-logs-nginx",
+          "containerPath": "/var/log/nginx"
+        }
+      ],
+      "links": [
+        "flask"
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-region": "us-west-2",
+          "awslogs-group": "eb-nginx-docker-log"
+        }
+      }
     }
   ]
 }
