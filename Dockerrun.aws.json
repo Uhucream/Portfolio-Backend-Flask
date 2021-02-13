@@ -50,7 +50,7 @@
          }
        },
       "workingDirectory": "/usr/src/app",
-      "command": ["/bin/bash", "-c", "flask db upgrade && gunicorn -c gunicorn_settings.py application:app"]
+      "command": ["/bin/bash", "-c", "/usr/src/app/migrate.sh && gunicorn -c gunicorn_settings.py application:app"]
     },
     {
       "name": "nginx",
