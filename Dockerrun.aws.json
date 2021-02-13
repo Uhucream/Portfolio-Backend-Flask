@@ -8,6 +8,12 @@
       }
     },
     {
+      "name": "gunicorn-log",
+      "host": {
+        "sourcePath": "/var/app/current/log/gunicorn.log"
+      }
+    },
+    {
       "name": "nginx-conf",
       "host": {
         "sourcePath": "/var/app/current/conf.d"
@@ -36,6 +42,10 @@
         {
           "sourceVolume": "flask-src",
           "containerPath": "/usr/src/app"
+        },
+        {
+            "sourceVolume": "gunicorn-log",
+            "containerPath": "/var/log/flask/gunicorn.log"
         },
         {
             "sourceVolume": "awseb-logs-flask",
