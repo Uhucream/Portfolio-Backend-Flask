@@ -18,7 +18,6 @@ services:
     build: 
       context: .
       dockerfile: docker/python/Dockerfile
-    image: portfolio-flask-backend_flask:latest
     container_name: portfolio-flask
     tty: true
     working_dir: /usr/src/app/
@@ -31,7 +30,7 @@ services:
       RDS_USERNAME: ${RDS_USERNAME}
       RDS_PASSWORD: ${RDS_PASSWORD}
       RDS_DB_NAME: ${RDS_DB_NAME}
-      FLASK_APP: '/usr/src/app/application:app'
+      FLASK_APP: 'application:app'
       FLASK_CONFIG: 'development'
     ports:
       - 5000:5000
@@ -42,9 +41,7 @@ services:
       - db
   
   web:
-    build:
-      context: .
-      dockerfile: docker/web/Dockerfile
+    image: nginx
     container_name: portfolio-web
     ports:
       - 81:81
