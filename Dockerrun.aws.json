@@ -23,10 +23,6 @@
         {
           "name": "FLASK_APP",
           "value": "application:app"
-        },
-        {
-          "name": "FLASK_CONFIG",
-          "value": "development"
         }
       ],
       "memory": 128,
