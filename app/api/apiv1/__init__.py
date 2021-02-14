@@ -1,5 +1,4 @@
 from flask import Blueprint
-# import psycopg2
 
 api = Blueprint('apiv1', __name__)
 
