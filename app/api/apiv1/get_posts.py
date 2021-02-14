@@ -1,14 +1,14 @@
 from apiv1 import api
 from flask import Flask, request, render_template, redirect
 import json
-from models import models
+from models import DailyReports
 from database import db
 
 
 @api.route('/posts', methods=['GET'])
 def get_all_posts():
 
-    record_list = models.DailyReports.query.all()
+    record_list = DailyReports.query.all()
 
     if len(record_list) == 0:
         response_json = json.dumps({'message': 'No Posts Found'})
@@ -44,7 +44,7 @@ def get_all_posts():
 @api.route('/post/<id>', methods=['GET'])
 def get_one_post(id=None):
 
-    record_list = models.DailyReports.query.filter_by(id=id).all()
+    record_list = DailyReports.query.filter_by(id=id).all()
 
     if len(record_list) == 0:
         response_json = json.dumps({'message': 'Not Found'})

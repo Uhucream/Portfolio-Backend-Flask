@@ -1,7 +1,7 @@
 from apiv1 import api
 from flask import Flask, request, render_template, redirect
 import json
-from models import models
+from models import DailyReports
 from database import db
 
 
@@ -12,7 +12,7 @@ def submit_post():
     charset = request.mimetype_params.get('charset') or 'UTF-8'
     request_dic = json.loads(raw_request_data.decode(charset, 'replace'))
 
-    post_content = models.DailyReports(
+    post_content = DailyReports(
         request_dic['title'], request_dic['body_text'])
     db.session.add(post_content)
     db.session.commit()

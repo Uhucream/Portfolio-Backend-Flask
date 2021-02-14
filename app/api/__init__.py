@@ -10,10 +10,11 @@ sys.path.append('{}/instance'.format(Path.cwd()))
 sys.path.append('{}/database'.format(Path.cwd()))
 import config
 from werkzeug.debug import DebuggedApplication
-import models
+from models import *
 
 def create_app(config_name):
     app = Flask(__name__)
+    app.config['JSON_AS_ASCII'] = False
     app.config.from_object(config.config[config_name])
     CORS(app)
     from database import db
