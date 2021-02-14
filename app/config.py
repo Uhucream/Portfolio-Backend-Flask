@@ -1,5 +1,5 @@
 import os
-from instance.postgresql import SQLALCHEMY_DATABASE_URI as DATABASE_URI
+from database.postgresql import SQLALCHEMY_DATABASE_URI as DATABASE_URI
 basedir = os.path.abspath(os.path.dirname('__file__'))
 
 class Config:
