@@ -8,7 +8,10 @@ from database import db
 @api.route('/submit_post', methods=['POST'])
 def submit_post():
 
-    request_dic = json.loads(request.get_data())
+    raw_request_data = request.get_data()
+    charset = request.mimetype_params.get('charset') or 'UTF-8'
+    request_dic = json.loads(raw_request_data.decode(charset, 'replace'))
+
     post_content = models.DailyReports(
         request_dic['title'], request_dic['body_text'])
     db.session.add(post_content)
@@ -23,7 +26,7 @@ def submit_post():
     response_json = json.dumps(str(result_dict), ensure_ascii=False)
     content = response_json
     status_code = 200
-    mimetype = 'application/json'
+    mimetype = 'application/json;charset=UTF-8'
     response = create_response.create_response(content, status_code, mimetype)
 
     return response

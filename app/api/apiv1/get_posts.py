@@ -15,7 +15,7 @@ def get_all_posts():
         import create_response
         content = response_json
         status_code = 404
-        mimetype = 'application/json'
+        mimetype = 'application/json;charset=UTF-8'
         response = create_response.create_response(
             content, status_code, mimetype)
 
@@ -34,7 +34,7 @@ def get_all_posts():
         import create_response
         content = response_json
         status_code = 200
-        mimetype = 'application/json'
+        mimetype = 'application/json;charset=UTF-8'
         response = create_response.create_response(
             content, status_code, mimetype)
 
@@ -51,7 +51,7 @@ def get_one_post(id=None):
         import create_response
         content = response_json
         status_code = 404
-        mimetype = 'application/json'
+        mimetype = 'application/json;charset=UTF-8'
         response = create_response.create_response(
             content, status_code, mimetype)
 
@@ -67,7 +67,7 @@ def get_one_post(id=None):
         import create_response
         content = response_json
         status_code = 200
-        mimetype = 'application/json'
+        mimetype = 'application/json;charset=UTF-8'
         response = create_response.create_response(
             content, status_code, mimetype)
 
