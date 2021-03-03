@@ -23,7 +23,7 @@ def submit_post():
     result_dict['updated_at'] = result_dict['updated_at'].isoformat()
 
     import create_response
-    response_json = json.dumps(str(result_dict), ensure_ascii=False)
+    response_json = json.dumps(result_dict, ensure_ascii=False)
     content = response_json
     status_code = 200
     mimetype = 'application/json;charset=UTF-8'
