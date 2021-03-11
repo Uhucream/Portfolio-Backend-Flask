@@ -24,9 +24,9 @@ class DailyReports(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'uuid': self.uuid,
+            'uuid': str(self.uuid),
             'title': self.title,
             'body_text': self.body_text,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'created_at': self.created_at.isoformat(),
+            'updated_at': self.updated_at.isoformat()
         }

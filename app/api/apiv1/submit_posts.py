@@ -18,9 +18,6 @@ def submit_post():
     db.session.commit()
     
     result_dict = post_content.to_dict()
-    result_dict['uuid'] = str(result_dict['uuid'])
-    result_dict['created_at'] = result_dict['created_at'].isoformat()
-    result_dict['updated_at'] = result_dict['updated_at'].isoformat()
 
     import create_response
     response_json = json.dumps(result_dict, ensure_ascii=False)
