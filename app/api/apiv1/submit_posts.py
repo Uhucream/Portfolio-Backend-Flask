@@ -9,7 +9,7 @@ from database import db
 
 @api.route('/submit_post', methods=['POST'])
 @cross_origin(supports_credentials=True)
-@jwt_required()
+@jwt_required(fresh=True)
 def submit_post():
 
     raw_request_data = request.get_data()
