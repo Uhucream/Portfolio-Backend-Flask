@@ -39,7 +39,6 @@ def login():
     response = create_response.create_response(content, status_code, mimetype)
 
     access_token = create_access_token(identity=user.id, expires_delta=timedelta(minutes=15), fresh=timedelta(minutes=15))
-    print(access_token)
     set_access_cookies(response, access_token, max_age=timedelta(minutes=15))
 
     try:
