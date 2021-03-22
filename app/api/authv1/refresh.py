@@ -1,5 +1,6 @@
 from authv1 import auth
 from flask import Flask, request, render_template, redirect, jsonify
+from flask_cors import cross_origin
 from flask_jwt_extended import (
     jwt_required,
     get_jwt_identity,
@@ -11,6 +12,7 @@ from database import db
 import json
 
 @auth.route('/refresh', methods=['POST'])
+@cross_origin(supports_credentials=True)
 @jwt_required(refresh=True)
 def refresh():
   current_user_id = get_jwt_identity()
