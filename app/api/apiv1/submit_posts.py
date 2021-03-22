@@ -1,11 +1,15 @@
 from apiv1 import api
 from flask import Flask, request, render_template, redirect
+from flask_cors import cross_origin
+from flask_jwt_extended import jwt_required
 import json
 from models import DailyReports
 from database import db
 
 
 @api.route('/submit_post', methods=['POST'])
+@cross_origin(supports_credentials=True)
+@jwt_required()
 def submit_post():
 
     raw_request_data = request.get_data()

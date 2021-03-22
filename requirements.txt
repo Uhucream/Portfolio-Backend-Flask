@@ -1,7 +1,8 @@
 flask
 flask-cors
+Flask-JWT-Extended
 Flask-Migrate
 Flask-SQLAlchemy
-psycopg2
 gunicorn
 ipwhois
+psycopg2

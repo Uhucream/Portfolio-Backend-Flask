@@ -8,13 +8,19 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SECRET_KEY = str(os.urandom(24))
     SQLALCHEMY_ECHO = True
-    DEBUG=False
-    TESTING=False
+    DEBUG = False
+    TESTING = False
+    JSON_SORT_KEYS = False
+    JSON_AS_ASCII = False
+    JWT_TOKEN_LOCATION = ['cookies']
+    JWT_ERROR_MESSAGE_KEY = 'message'
+    JWT_COOKIE_SECURE = True
 
 class ProductionConfig(Config):
     pass
 
 class DevelopmentConfig(Config):
+    JWT_COOKIE_SECURE = False
     ENV='development'
     DEBUG = True
     
