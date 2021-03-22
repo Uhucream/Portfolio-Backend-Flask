@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, redirect
 import json
 from models import DailyReports
 from database import db
+import create_response
 
 
 @api.route('/posts', methods=['GET'])
@@ -11,9 +12,7 @@ def get_all_posts():
     record_list = DailyReports.query.all()
 
     if len(record_list) == 0:
-        response_json = json.dumps({'message': 'No Posts Found'})
-        import create_response
-        content = response_json
+        content = json.dumps({'message': 'No Posts Found'})
         status_code = 404
         mimetype = 'application/json;charset=UTF-8'
         response = create_response.create_response(
@@ -26,9 +25,7 @@ def get_all_posts():
             raw_dict = elem.to_dict()
             dict_list.append(raw_dict)
 
-        response_json = json.dumps(dict_list, ensure_ascii=False)
-        import create_response
-        content = response_json
+        content = json.dumps(dict_list, ensure_ascii=False)
         status_code = 200
         mimetype = 'application/json;charset=UTF-8'
         response = create_response.create_response(
@@ -40,11 +37,10 @@ def get_all_posts():
 @api.route('/post/<id>', methods=['GET'])
 def get_one_post(id=None):
 
-    record_list = DailyReports.query.filter_by(id=id).all()
+    record = DailyReports.query.filter_by(id=id).scalar()
 
-    if len(record_list) == 0:
+    if record is None:
         response_json = json.dumps({'message': 'Not Found'})
-        import create_response
         content = response_json
         status_code = 404
         mimetype = 'application/json;charset=UTF-8'
@@ -53,11 +49,9 @@ def get_one_post(id=None):
 
         return response
     else:
-        result_dict = record_list[0].to_dict()
+        result_dict = record.to_dict()
 
-        response_json = json.dumps(result_dict, ensure_ascii=False)
-        import create_response
-        content = response_json
+        content = json.dumps(result_dict, ensure_ascii=False)
         status_code = 200
         mimetype = 'application/json;charset=UTF-8'
         response = create_response.create_response(
