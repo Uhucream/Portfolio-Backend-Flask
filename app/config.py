@@ -15,6 +15,7 @@ class Config:
     JWT_TOKEN_LOCATION = ['cookies']
     JWT_ERROR_MESSAGE_KEY = 'message'
     JWT_COOKIE_SECURE = True
+    JWT_COOKIE_SAMESITE = 'LaX'
 
 class ProductionConfig(Config):
     pass
