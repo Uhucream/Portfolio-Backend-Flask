@@ -19,10 +19,10 @@ def logout():
 
   import create_response
 
+  jti = get_jwt()["jti"]
   response = jsonify({"message": "logout successful"})
   unset_jwt_cookies(response)
 
-  jti = get_jwt()["jti"]
   db.session.add(BlockedTokens(jti=jti))
   db.session.commit()
 
