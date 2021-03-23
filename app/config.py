@@ -30,7 +30,6 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     ENV='testing'
     TESTING = True
-    WTF_CSRF_ENABLED = False
 
 config = {
     'development': DevelopmentConfig,
