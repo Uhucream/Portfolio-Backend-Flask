@@ -16,6 +16,7 @@ class Config:
     JWT_ERROR_MESSAGE_KEY = 'message'
     JWT_COOKIE_SECURE = True
     JWT_COOKIE_SAMESITE = 'LaX'
+    JWT_COOKIE_DOMAIN = os.getenv('FLASK_COOKIE_DOMAIN', None)
 
 class ProductionConfig(Config):
     pass
