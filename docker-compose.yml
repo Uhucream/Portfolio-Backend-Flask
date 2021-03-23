@@ -31,7 +31,7 @@ services:
       RDS_PASSWORD: ${RDS_PASSWORD}
       RDS_DB_NAME: ${RDS_DB_NAME}
       FLASK_APP: 'application:app'
-      FLASK_CONFIG: 'development'
+      FLASK_CONFIG: ${FLASK_CONFIG}
     restart: always
     ports:
       - 5000:5000
