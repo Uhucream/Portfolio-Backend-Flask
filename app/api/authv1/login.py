@@ -1,5 +1,5 @@
 from authv1 import auth
-from flask import Flask, request, render_template, redirect, jsonify
+from flask import Flask, request, render_template, redirect, current_app
 from flask_cors import cross_origin
 from flask_jwt_extended import (
   create_access_token,
@@ -22,6 +22,8 @@ def login():
   user = db.session.query(User).filter_by(email=request_dic['email']).first()
 
   if not user or not user.check_password(request_dic['password']):
+    logger = current_app.logger
+    logger.error('Wrong ID or password')
     import create_response
 
     content = json.dumps({'message': 'ID もしくは パスワードに誤りがあります。'})
@@ -39,7 +41,7 @@ def login():
     response = create_response.create_response(content, status_code, mimetype)
 
     access_token = create_access_token(identity=user.id, expires_delta=timedelta(minutes=15), fresh=timedelta(minutes=15))
-    set_access_cookies(response, access_token, max_age=timedelta(minutes=15))
+    set_access_cookies(response, access_token)
 
     try:
       if request_dic['remember'] == 1:
