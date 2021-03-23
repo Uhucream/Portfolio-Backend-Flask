@@ -7,7 +7,7 @@ class Config:
     SQLALCHEMY_DATABASE_URI = DATABASE_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SECRET_KEY = str(os.urandom(24))
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
     DEBUG = False
     TESTING = False
     JSON_SORT_KEYS = False
@@ -21,6 +21,7 @@ class ProductionConfig(Config):
     pass
 
 class DevelopmentConfig(Config):
+    SQLALCHEMY_ECHO = True
     JWT_COOKIE_SECURE = False
     ENV='development'
     DEBUG = True
