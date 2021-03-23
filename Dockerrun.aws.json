@@ -46,7 +46,8 @@
          "logDriver": "awslogs",
          "options": {
            "awslogs-region": "us-west-2",
-           "awslogs-group": "eb-flask-docker-log"
+           "awslogs-group": "eb-flask-docker-log",
+           "awslogs-stream-prefix": "flask"
          }
        },
       "workingDirectory": "/usr/src/app",
@@ -87,7 +88,8 @@
         "logDriver": "awslogs",
         "options": {
           "awslogs-region": "us-west-2",
-          "awslogs-group": "eb-nginx-docker-log"
+          "awslogs-group": "eb-nginx-docker-log",
+          "awslogs-stream-prefix": "nginx"
         }
       }
     }
