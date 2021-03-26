@@ -20,6 +20,9 @@ class DailyReports(db.Model):
     def __init__(self, title, body_text):
         self.title = title
         self.body_text = body_text
+        self.created_at = datetime.utcnow()
+        self.updated_at = self.created_at
+
 
     def to_dict(self):
         return {
