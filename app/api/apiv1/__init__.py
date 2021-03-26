@@ -5,3 +5,5 @@ api = Blueprint('apiv1', __name__)
 import get_posts
 import submit_posts
 import healthcheck
+import edit_post
+import delete_post
