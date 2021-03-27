@@ -13,8 +13,13 @@ import create_response
 @cross_origin(supports_credentials=True)
 @jwt_required(fresh=True)
 def delete_post():
-    request_data_dic = decode_request(request)
-    
+    request_data_dic = {}
+    if request.args.get('id') is not None:
+        request_data_dic['id'] = request.args.get('id')
+
+    if request.args.get('uuid') is not None:
+        request_data_dic['uuid'] = request.args.get('uuid')
+
     delete_content = db.session.query(DailyReports).filter(DailyReports.id==request_data_dic['id'], DailyReports.uuid==str(request_data_dic['uuid']))
     if delete_content.scalar() is None:
       content = json.dumps({'message': 'Not found reports'})
