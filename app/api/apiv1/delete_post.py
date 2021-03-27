@@ -1,4 +1,5 @@
 from apiv1 import api
+from api.decode_request import decode_request
 from flask import request, current_app
 from flask_cors import cross_origin
 from flask_jwt_extended import jwt_required
@@ -12,9 +13,9 @@ import create_response
 @cross_origin(supports_credentials=True)
 @jwt_required(fresh=True)
 def delete_post():
-    request_data_json = request.get_json()
+    request_data_dic = decode_request(request)
     
-    delete_content = db.session.query(DailyReports).filter(DailyReports.id==request_data_json['id'], DailyReports.uuid==str(request_data_json['uuid']))
+    delete_content = db.session.query(DailyReports).filter(DailyReports.id==request_data_dic['id'], DailyReports.uuid==str(request_data_dic['uuid']))
     if delete_content.scalar() is None:
       content = json.dumps({'message': 'Not found reports'})
       status_code = 404

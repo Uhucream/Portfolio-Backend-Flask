@@ -1,4 +1,5 @@
 from authv1 import auth
+from api.decode_request import decode_request
 from flask import Flask, request, render_template, redirect, current_app
 from flask_cors import cross_origin
 from flask_jwt_extended import (
@@ -15,9 +16,7 @@ from database import db
 @auth.route('/login', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def login():
-  raw_request_data = request.get_data()
-  charset = request.mimetype_params.get('charset') or 'UTF-8'
-  request_dic = json.loads(raw_request_data.decode(charset, 'replace'))
+  request_dic = decode_request(request)
 
   user = db.session.query(User).filter_by(email=request_dic['email']).first()
 

@@ -1,4 +1,5 @@
 from apiv1 import api
+from api.decode_request import decode_request
 from flask import request, current_app
 from flask_cors import cross_origin
 from flask_jwt_extended import jwt_required
@@ -13,10 +14,10 @@ import create_response
 @jwt_required(fresh=True)
 def edit_post():
     logger = current_app.logger
-    request_data_json = request.get_json()
+    request_data_dic = decode_request(request)
     try:
-        edit_target_id = str(request_data_json['id'])
-        edit_target_uuid = str(request_data_json['uuid'])
+        edit_target_id = str(request_data_dic['id'])
+        edit_target_uuid = str(request_data_dic['uuid'])
     except KeyError:
         logger.info('A uuid and id of editing target is required.')
         content = json.dumps({'messages': 'A uuid and id of editing target is required.'})
@@ -27,12 +28,12 @@ def edit_post():
         return response
 
     try:
-        edit_target_body = request_data_json['body_text']
+        edit_target_body = request_data_dic['body_text']
     except KeyError:
         edit_target_body = None
 
     try:
-        edit_target_title = request_data_json['title']
+        edit_target_title = request_data_dic['title']
     except KeyError:
         edit_target_title = None
 

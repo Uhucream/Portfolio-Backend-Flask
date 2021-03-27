@@ -1,4 +1,5 @@
 from apiv1 import api
+from api.decode_request import decode_request
 from flask import Flask, request, render_template, redirect
 from flask_cors import cross_origin
 from flask_jwt_extended import jwt_required
@@ -12,9 +13,7 @@ from database import db
 @jwt_required(fresh=True)
 def submit_post():
 
-    raw_request_data = request.get_data()
-    charset = request.mimetype_params.get('charset') or 'UTF-8'
-    request_dic = json.loads(raw_request_data.decode(charset, 'replace'))
+    request_dic = decode_request(request)
 
     post_content = DailyReports(
         request_dic['title'], request_dic['body_text'])
