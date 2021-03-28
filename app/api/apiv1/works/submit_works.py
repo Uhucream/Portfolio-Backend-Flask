@@ -11,8 +11,8 @@ import create_response
 
 
 @api.route('/my_works/submit', methods=['POST'])
-@cross_origin(supports_credentials=True)
-@jwt_required(fresh=True)
+# @cross_origin(supports_credentials=True)
+# @jwt_required(fresh=True)
 def submit_work():
 
     request_dic = decode_request(request)
@@ -21,6 +21,16 @@ def submit_work():
         name = request_dic['name']
     except KeyError:
         content = json.dumps({'message': 'Work name is required'})
+        status_code = 400
+
+        response = create_response.create_response(content, status_code)
+
+        return response
+
+    try:
+        end_point_uri = request_dic['end_point_uri']  # 成果物にアクセスする際に必要なエンドポイントを格納
+    except KeyError:
+        content = json.dumps({'message': 'end_point_uri is required'})
         status_code = 400
 
         response = create_response.create_response(content, status_code)
@@ -61,6 +71,7 @@ def submit_work():
 
     new_content_dict = {
         'name': name,
+        'end_point_uri': end_point_uri,
         'top_page_outline': top_page_outline,
         'description': description,
         'work_url': work_url,

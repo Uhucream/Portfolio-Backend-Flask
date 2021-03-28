@@ -32,10 +32,10 @@ def get_all_works():
 
         return response
 
-@api.route('/my_work/<uuid>', methods=['GET'])
-def get_one_work(uuid=None):
+@api.route('/my_work/<end_point_uri>', methods=['GET'])
+def get_one_work(end_point_uri=None):
 
-    record = MyWorks.query.filter_by(uuid=str(uuid)).scalar()
+    record = MyWorks.query.filter_by(end_point_uri=end_point_uri).scalar()
 
     if record is None:
         response_json = json.dumps({'message': 'Not Found'})
