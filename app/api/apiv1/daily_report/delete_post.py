@@ -9,6 +9,7 @@ from models import DailyReports
 from database import db
 import create_response
 
+
 @api.route('/delete_post', methods=['DELETE'])
 @cross_origin(supports_credentials=True)
 @jwt_required(fresh=True)
@@ -20,27 +21,32 @@ def delete_post():
     if request.args.get('uuid') is not None:
         request_data_dic['uuid'] = request.args.get('uuid')
 
-    delete_content = db.session.query(DailyReports).filter(DailyReports.id==request_data_dic['id'], DailyReports.uuid==str(request_data_dic['uuid']))
+    delete_content = db.session.query(DailyReports).filter(
+        DailyReports.id == request_data_dic['id'], DailyReports.uuid == str(request_data_dic['uuid']))
     if delete_content.scalar() is None:
-      content = json.dumps({'message': 'Not found reports'})
-      status_code = 404
-      mimetype = 'application/json;charset=UTF-8'
-      response = create_response.create_response(content, status_code, mimetype)
+        content = json.dumps({'message': 'Not found reports'})
+        status_code = 404
 
-      return response
+        response = create_response.create_response(
+            content, status_code)
+
+        return response
 
     else:
-      delete_content.delete()
-      db.session.commit()
+        delete_content.delete()
+        db.session.commit()
 
-      db.session.execute("ALTER SEQUENCE daily_reports_id_seq RESTART WITH 1;")
-      db.session.execute("UPDATE daily_reports SET id=nextval('daily_reports_id_seq');")
+        db.session.execute(
+            "ALTER SEQUENCE daily_reports_id_seq RESTART WITH 1;")
+        db.session.execute(
+            "UPDATE daily_reports SET id=nextval('daily_reports_id_seq');")
 
-      db.session.commit()
+        db.session.commit()
 
-      content = json.dumps({'message': 'Success'})
-      status_code = 204
-      mimetype = 'application/json;charset=UTF-8'
-      response = create_response.create_response(content, status_code, mimetype)
+        content = json.dumps({'message': 'Success'})
+        status_code = 204
 
-      return response
+        response = create_response.create_response(
+            content, status_code)
+
+        return response

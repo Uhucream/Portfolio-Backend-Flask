@@ -14,9 +14,9 @@ from database import db
 
 @jwt.token_in_blocklist_loader
 def check_if_token_revoked(jwt_header, jwt_payload):
-  jti = jwt_payload['jti']
-  token = db.session.query(BlockedTokens.id).filter_by(jti=jti).scalar()
-  return token is not None
+    jti = jwt_payload['jti']
+    token = db.session.query(BlockedTokens.id).filter_by(jti=jti).scalar()
+    return token is not None
 
 
 @auth.route('/protected', methods=['GET'])
@@ -29,7 +29,7 @@ def protected():
     current_user = get_jwt_identity()
     content = json.dumps({"message": "Success", "logged_in_as": current_user})
     status_code = 200
-    mimetype = 'application/json;charset=UTF-8'
-    response = create_response.create_response(content, status_code, mimetype)
+
+    response = create_response.create_response(content, status_code)
 
     return response

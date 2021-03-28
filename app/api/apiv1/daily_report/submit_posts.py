@@ -19,15 +19,14 @@ def submit_post():
         request_dic['title'], request_dic['body_text'])
     db.session.add(post_content)
     db.session.commit()
-    
+
     result_dict = post_content.to_dict()
 
     import create_response
     response_json = json.dumps(result_dict, ensure_ascii=False)
     content = response_json
     status_code = 200
-    mimetype = 'application/json;charset=UTF-8'
-    response = create_response.create_response(content, status_code, mimetype)
+
+    response = create_response.create_response(content, status_code)
 
     return response
-
