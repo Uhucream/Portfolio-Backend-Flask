@@ -19,7 +19,7 @@ class MyWorks(db.Model):
 
     def to_dict(self):
         return {
-            'id': self.id,
+            'id': str(self.id),
             'work_name': self.work_name,
             'work_description': self.work_description,
             'work_url': self.work_url,
