@@ -1,5 +1,5 @@
 from authv1 import auth
-from api.decode_request import decode_request
+from utils.decode_request import decode_request
 from flask import Flask, request, render_template, redirect, current_app
 from flask_cors import cross_origin
 from flask_jwt_extended import (
