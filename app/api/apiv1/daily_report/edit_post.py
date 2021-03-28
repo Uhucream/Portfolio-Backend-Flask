@@ -20,10 +20,12 @@ def edit_post():
         edit_target_uuid = str(request_data_dic['uuid'])
     except KeyError:
         logger.info('A uuid and id of editing target is required.')
-        content = json.dumps({'messages': 'A uuid and id of editing target is required.'})
+        content = json.dumps(
+            {'messages': 'A uuid and id of editing target is required.'})
         status_code = 400
-        mimetype = 'application/json;charset=UTF-8'
-        response = create_response.create_response(content, status_code, mimetype)
+
+        response = create_response.create_response(
+            content, status_code)
 
         return response
 
@@ -37,14 +39,15 @@ def edit_post():
     except KeyError:
         edit_target_title = None
 
-
     if edit_target_title is None and edit_target_body is None:
         logger.info(
             'At least either \'title\' or \'body_text\' must be included')
-        content = json.dumps({'messages': 'At least either \'title\' or \'body_text\' must be included'})
+        content = json.dumps(
+            {'messages': 'At least either \'title\' or \'body_text\' must be included'})
         status_code = 400
-        mimetype = 'application/json;charset=UTF-8'
-        response = create_response.create_response(content, status_code, mimetype)
+
+        response = create_response.create_response(
+            content, status_code)
 
         return response
 
@@ -55,8 +58,9 @@ def edit_post():
             logger.error('Not found reports')
             content = json.dumps({'message': 'Not found reports'})
             status_code = 404
-            mimetype = 'application/json;charset=UTF-8'
-            response = create_response.create_response(content, status_code, mimetype)
+
+            response = create_response.create_response(
+                content, status_code)
 
             return response
         else:
@@ -76,14 +80,16 @@ def edit_post():
                     update_dict.pop(key)
                     original_content_dict.pop(key)
 
-            update_diffs_dict = dict(update_dict.items() - original_content_dict.items())
+            update_diffs_dict = dict(
+                update_dict.items() - original_content_dict.items())
 
             if len(update_diffs_dict) == 0:
                 logger.info('There are no changes')
                 content = json.dumps({'message': 'There are no changes.'})
                 status_code = 204
-                mimetype = 'application/json;charset=UTF-8'
-                response = create_response.create_response(content, status_code, mimetype)
+
+                response = create_response.create_response(
+                    content, status_code)
 
                 return response
 
@@ -96,18 +102,19 @@ def edit_post():
                         'after_modified': update_dict[diff_key]
                     }
                     diff_results_list.append(diff_result_dict)
-                    
+
                 logger.info(diff_results_list)
 
                 try:
-                  update_dict[DailyReports.title] = update_dict.pop('title')
+                    update_dict[DailyReports.title] = update_dict.pop('title')
                 except KeyError:
-                  pass
+                    pass
 
                 try:
-                  update_dict[DailyReports.body_text] = update_dict.pop('body_text')
+                    update_dict[DailyReports.body_text] = update_dict.pop(
+                        'body_text')
                 except KeyError:
-                  pass
+                    pass
 
                 edit_content.update(update_dict)
                 db.session.commit()
@@ -117,8 +124,8 @@ def edit_post():
 
                 content = json.dumps(response_dict, ensure_ascii=False)
                 status_code = 200
-                mimetype = 'application/json;charset=UTF-8'
+
                 response = create_response.create_response(
-                    content, status_code, mimetype)
+                    content, status_code)
 
                 return response

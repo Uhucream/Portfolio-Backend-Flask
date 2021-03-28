@@ -15,16 +15,16 @@ import json
 @cross_origin(supports_credentials=True)
 @jwt_required(refresh=True)
 def refresh():
-  current_user_id = get_jwt_identity()
-  access_token = create_access_token(identity = current_user_id)
-  
-  import create_response
+    current_user_id = get_jwt_identity()
+    access_token = create_access_token(identity=current_user_id)
 
-  status_code = 200
-  mimetype = 'application/json;charset=UTF-8'
-  content = json.dumps({'is_success': True})
-  response = create_response.create_response(content, status_code)
+    import create_response
 
-  set_access_cookies(response, access_token)
+    status_code = 200
 
-  return response
+    content = json.dumps({'is_success': True})
+    response = create_response.create_response(content, status_code)
+
+    set_access_cookies(response, access_token)
+
+    return response

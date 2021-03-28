@@ -14,9 +14,9 @@ def get_all_posts():
     if len(record_list) == 0:
         content = json.dumps({'message': 'No Posts Found'})
         status_code = 404
-        mimetype = 'application/json;charset=UTF-8'
+
         response = create_response.create_response(
-            content, status_code, mimetype)
+            content, status_code)
 
         return response
     else:
@@ -27,9 +27,9 @@ def get_all_posts():
 
         content = json.dumps(dict_list, ensure_ascii=False)
         status_code = 200
-        mimetype = 'application/json;charset=UTF-8'
+
         response = create_response.create_response(
-            content, status_code, mimetype)
+            content, status_code)
 
         return response
 
@@ -43,9 +43,9 @@ def get_one_post(id=None):
         response_json = json.dumps({'message': 'Not Found'})
         content = response_json
         status_code = 404
-        mimetype = 'application/json;charset=UTF-8'
+
         response = create_response.create_response(
-            content, status_code, mimetype)
+            content, status_code)
 
         return response
     else:
@@ -53,8 +53,8 @@ def get_one_post(id=None):
 
         content = json.dumps(result_dict, ensure_ascii=False)
         status_code = 200
-        mimetype = 'application/json;charset=UTF-8'
+
         response = create_response.create_response(
-            content, status_code, mimetype)
+            content, status_code)
 
         return response
