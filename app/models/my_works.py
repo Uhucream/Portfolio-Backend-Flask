@@ -6,22 +6,28 @@ class MyWorks(db.Model):
     __tablename__ = 'my_works'
 
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True)
-    work_name = db.Column(db.Text, nullable=False)
-    work_picture_url = db.Column(db.Text, nullable=True)
+    name = db.Column(db.Text, nullable=False)
+    end_point_uri = db.Column(db.Text, nullable=False, unique=True)
+    top_page_outline = db.Column(db.Text, nullable=False)
     work_url = db.Column(db.Text, nullable=True)
-    work_description = db.Column(db.Text, nullable=True)
+    work_picture_url = db.Column(db.Text, nullable=True)
+    description = db.Column(db.Text, nullable=True)
 
-    def __init__(self, work_name, work_url, work_picture_url, work_description):
-        self.work_name = work_name
-        self.work_description = work_description
+    def __init__(self, name, end_point_uri, top_page_outline, work_url, work_picture_url, description):
+        self.name = name
+        self.end_point_uri = end_point_uri
+        self.top_page_outline = top_page_outline
+        self.description = description
         self.work_url = work_url
         self.work_picture_url = work_picture_url
 
     def to_dict(self):
         return {
             'id': str(self.id),
-            'work_name': self.work_name,
-            'work_description': self.work_description,
+            'name': self.name,
+            'end_point_uri': self.end_point_uri,
+            'top_page_outline': self.top_page_outline,
+            'description': self.description,
             'work_url': self.work_url,
             'work_picture_url': self.work_picture_url,
         }
