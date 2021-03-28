@@ -5,6 +5,7 @@ from models import MyWorks
 from database import db
 import create_response
 
+
 @api.route('/my_works', methods=['GET'])
 def get_all_works():
 
@@ -32,10 +33,11 @@ def get_all_works():
 
         return response
 
-@api.route('/my_work/<end_point_uri>', methods=['GET'])
-def get_one_work(end_point_uri=None):
 
-    record = MyWorks.query.filter_by(end_point_uri=end_point_uri).scalar()
+@api.route('/my_work/<endpoint_uri>', methods=['GET'])
+def get_one_work(endpoint_uri=None):
+
+    record = MyWorks.query.filter_by(endpoint_uri=endpoint_uri).scalar()
 
     if record is None:
         response_json = json.dumps({'message': 'Not Found'})
