@@ -1,5 +1,5 @@
 from apiv1 import api
-from api.decode_request import decode_request
+from utils.decode_request import decode_request
 from flask import Flask, request, render_template, redirect
 from flask_cors import cross_origin
 from flask_jwt_extended import jwt_required

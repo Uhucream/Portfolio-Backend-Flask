@@ -6,6 +6,7 @@ from pathlib import *
 from flask_jwt_extended import JWTManager
 sys.path.append('{}/cli'.format(Path.cwd()))
 sys.path.append('{}/api'.format(Path.cwd()))
+sys.path.append('{}/api/utils'.format(Path.cwd()))
 sys.path.append('{}/api/apiv1'.format(Path.cwd()))
 sys.path.append('{}/api/authv1'.format(Path.cwd()))
 sys.path.append('{}/models'.format(Path.cwd()))
