@@ -1,5 +1,6 @@
 from apiv1 import api
 from utils.decode_request import decode_request
+from utils.cut_none_keys import cut_none_keys
 from flask import request, current_app
 from flask_cors import cross_origin
 from flask_jwt_extended import jwt_required
@@ -75,10 +76,8 @@ def edit_post():
                 'body_text': edit_content_dict['body_text']
             }
 
-            for key in list(update_dict):
-                if update_dict[key] is None:
-                    update_dict.pop(key)
-                    original_content_dict.pop(key)
+            cut_none_keys(update_dict)
+            cut_none_keys(original_content_dict)
 
             update_diffs_dict = dict(
                 update_dict.items() - original_content_dict.items())
