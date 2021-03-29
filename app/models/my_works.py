@@ -16,14 +16,31 @@ class MyWorks(db.Model):
     work_picture_url = db.Column(db.Text, nullable=True)
     description = db.Column(db.Text, nullable=True)
 
-    def __init__(self, id, name, endpoint_uri, top_page_outline, work_url, work_picture_url, description):
-        self.id = id
+    def __init__(self, name, endpoint_uri, top_page_outline, **args):
+        try:
+            self.id = args['id']
+        except KeyError:
+            self.id = None
+
         self.name = name
         self.endpoint_uri = endpoint_uri
         self.top_page_outline = top_page_outline
-        self.description = description
-        self.work_url = work_url
-        self.work_picture_url = work_picture_url
+
+        try:
+            self.description = args['description']
+        except KeyError:
+            self.description = None
+
+        try:
+            self.work_url = args['work_url']
+        except KeyError:
+            self.work_url = None
+
+        try:
+            self.work_picture_url = args['work_picture_url']
+        except KeyError:
+            self.work_picture_url = None
+
 
     def to_dict(self):
         return {

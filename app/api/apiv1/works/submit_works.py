@@ -58,6 +58,12 @@ def submit_work():
         return response
 
     try:
+        id = request_dic['id']
+    except KeyError:
+        id = None
+        pass
+
+    try:
         work_url = request_dic['work_url']
     except KeyError:
         work_url = None
@@ -73,12 +79,18 @@ def submit_work():
         'name': name,
         'endpoint_uri': endpoint_uri,
         'top_page_outline': top_page_outline,
-        'description': description,
-        'work_url': work_url,
-        'work_picture_url': work_picture_url,
     }
 
-    work_content = MyWorks(**new_content_dict)
+    optional_args_dict = {
+        'id': id,
+        'work_url': work_url,
+        'work_picture_url': work_picture_url,
+        'description': description
+    }
+
+    cut_none_keys(optional_args_dict)
+
+    work_content = MyWorks(**new_content_dict, **optional_args_dict)
     db.session.add(work_content)
     db.session.commit()
 
