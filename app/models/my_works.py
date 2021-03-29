@@ -6,7 +6,8 @@ import uuid
 class MyWorks(db.Model):
     __tablename__ = 'my_works'
 
-    id = db.Column(UUID(as_uuid=True), primary_key=True,
+    id = db.Column(db.Integer, unique=True)
+    uuid = db.Column(UUID(as_uuid=True), primary_key=True,
                    default=uuid.uuid4, unique=True)
     name = db.Column(db.Text, nullable=False)
     endpoint_uri = db.Column(db.Text, nullable=False, unique=True)
@@ -15,7 +16,8 @@ class MyWorks(db.Model):
     work_picture_url = db.Column(db.Text, nullable=True)
     description = db.Column(db.Text, nullable=True)
 
-    def __init__(self, name, endpoint_uri, top_page_outline, work_url, work_picture_url, description):
+    def __init__(self, id, name, endpoint_uri, top_page_outline, work_url, work_picture_url, description):
+        self.id = id
         self.name = name
         self.endpoint_uri = endpoint_uri
         self.top_page_outline = top_page_outline
@@ -25,7 +27,8 @@ class MyWorks(db.Model):
 
     def to_dict(self):
         return {
-            'id': str(self.id),
+            'id': self.id,
+            'uuid': str(self.uuid),
             'name': self.name,
             'endpoint_uri': self.endpoint_uri,
             'top_page_outline': self.top_page_outline,
