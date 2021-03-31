@@ -1,3 +1,4 @@
+from api import basic_auth
 from authv1 import auth
 from utils.decode_request import decode_request
 from flask import Flask, request, render_template, redirect, current_app
@@ -14,14 +15,23 @@ from models import User
 from database import db
 
 
+@basic_auth.verify_password
+def verify_password(email, password):
+    user = db.session.query(User).filter_by(email=email).scalar()
+
+    if not user or not user.check_password(password):
+        return None
+    else:
+        return user
+
 @auth.route('/login', methods=['POST'])
+@basic_auth.login_required
 @cross_origin(supports_credentials=True)
 def login():
-    request_dic = decode_request(request)
+    user = basic_auth.current_user()
+    request_dic = request.get_json()
 
-    user = db.session.query(User).filter_by(email=request_dic['email']).first()
-
-    if not user or not user.check_password(request_dic['password']):
+    if user is None:
         logger = current_app.logger
         logger.error('Wrong ID or password')
         import create_response
@@ -29,8 +39,7 @@ def login():
         content = json.dumps({'message': 'ID もしくは パスワードに誤りがあります。'})
         status_code = 401
 
-        response = create_response.create_response(
-            content, status_code)
+        response = create_response.create_response(content, status_code)
 
         return response
     else:
@@ -39,8 +48,7 @@ def login():
         status_code = 200
 
         content = user.to_json()
-        response = create_response.create_response(
-            content, status_code)
+        response = create_response.create_response(content, status_code)
 
         access_token = create_access_token(identity=user.id, expires_delta=timedelta(
             minutes=15), fresh=timedelta(minutes=15))
@@ -51,6 +59,8 @@ def login():
                 refresh_token = create_refresh_token(identity=user.id)
                 set_refresh_cookies(response, refresh_token)
         except KeyError:
+            pass
+        except TypeError:
             pass
 
         return response
