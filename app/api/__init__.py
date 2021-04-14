@@ -9,8 +9,10 @@ import sys
 import os
 from pathlib import *
 from flask_jwt_extended import JWTManager
+from flask_seeder import FlaskSeeder
 from flask_httpauth import HTTPBasicAuth
 sys.path.append('{}/cli'.format(Path.cwd()))
+sys.path.append('{}/seeds'.format(Path.cwd()))
 sys.path.append('{}/api'.format(Path.cwd()))
 sys.path.append('{}/api/utils'.format(Path.cwd()))
 sys.path.append('{}/api/apiv1'.format(Path.cwd()))
@@ -20,6 +22,7 @@ sys.path.append('{}/instance'.format(Path.cwd()))
 sys.path.append('{}/database'.format(Path.cwd()))
 jwt = JWTManager()
 basic_auth = HTTPBasicAuth()
+seeder = FlaskSeeder()
 
 
 def create_app(config_name):
@@ -33,6 +36,7 @@ def create_app(config_name):
     db.init_app(app)
     Migrate(app, db)
     jwt.init_app(app)
+    seeder.init_app(app, db)
 
     from apiv1 import api as apiv1_blueprint
     from authv1 import auth as authv1_blueprint
