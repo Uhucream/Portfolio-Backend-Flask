@@ -14,6 +14,7 @@ class MyWorks(db.Model):
     top_page_outline = db.Column(db.Text, nullable=False)
     work_url = db.Column(db.Text, nullable=True)
     work_picture_url = db.Column(db.Text, nullable=True)
+    work_picture_thumbnail_url = db.Column(db.Text, nullable=True)
     description = db.Column(db.Text, nullable=True)
 
     def __init__(self, name, endpoint_uri, top_page_outline, **args):
@@ -41,6 +42,11 @@ class MyWorks(db.Model):
         except KeyError:
             self.work_picture_url = None
 
+        try:
+            self.work_picture_thumbnail_url = args['work_picture_thumbnail_url']
+        except KeyError:
+            self.work_picture_thumbnail_url = None
+
 
     def to_dict(self):
         return {
@@ -52,4 +58,5 @@ class MyWorks(db.Model):
             'description': self.description,
             'work_url': self.work_url,
             'work_picture_url': self.work_picture_url,
+            'work_picture_thumbnail_url': self.work_picture_thumbnail_url,
         }
