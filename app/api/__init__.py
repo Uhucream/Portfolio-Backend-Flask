@@ -11,6 +11,8 @@ from pathlib import *
 from flask_jwt_extended import JWTManager
 from flask_seeder import FlaskSeeder
 from flask_httpauth import HTTPBasicAuth
+from flask_alchemydumps import AlchemyDumps
+from flask_alchemydumps.cli import alchemydumps as alchemydumps_cli_commands
 sys.path.append('{}/cli'.format(Path.cwd()))
 sys.path.append('{}/seeds'.format(Path.cwd()))
 sys.path.append('{}/api'.format(Path.cwd()))
@@ -23,12 +25,14 @@ sys.path.append('{}/database'.format(Path.cwd()))
 jwt = JWTManager()
 basic_auth = HTTPBasicAuth()
 seeder = FlaskSeeder()
+alchemydumps = AlchemyDumps()
 
 
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config.config[config_name])
 
+    app.cli.add_command(alchemydumps_cli_commands)
     app.cli.add_command(user.user_cli)
 
     CORS(app)
@@ -37,6 +41,7 @@ def create_app(config_name):
     Migrate(app, db)
     jwt.init_app(app)
     seeder.init_app(app, db)
+    alchemydumps.init_app(app, db)
 
     from apiv1 import api as apiv1_blueprint
     from authv1 import auth as authv1_blueprint

@@ -4,6 +4,7 @@
 
 # flask
 **cache**
+alchemydumps/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
