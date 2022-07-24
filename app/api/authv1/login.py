@@ -21,8 +21,8 @@ def verify_password(email, password):
 
     if not user or not user.check_password(password):
         return None
-    else:
-        return user
+
+    return user
 
 @auth.route('/login', methods=['POST'])
 @basic_auth.login_required
@@ -42,25 +42,26 @@ def login():
         response = create_response.create_response(content, status_code)
 
         return response
-    else:
-        import create_response
 
-        status_code = 200
 
-        content = user.to_json()
-        response = create_response.create_response(content, status_code)
+    import create_response
 
-        access_token = create_access_token(identity=user.id, expires_delta=timedelta(
-            minutes=15), fresh=timedelta(minutes=15))
-        set_access_cookies(response, access_token)
+    status_code = 200
 
-        try:
-            if request_dic['remember'] == 1:
-                refresh_token = create_refresh_token(identity=user.id)
-                set_refresh_cookies(response, refresh_token)
-        except KeyError:
-            pass
-        except TypeError:
-            pass
+    content = user.to_json()
+    response = create_response.create_response(content, status_code)
 
-        return response
+    access_token = create_access_token(identity=user.id, expires_delta=timedelta(
+        minutes=15), fresh=timedelta(minutes=15))
+    set_access_cookies(response, access_token)
+
+    try:
+        if request_dic['remember'] == 1:
+            refresh_token = create_refresh_token(identity=user.id)
+            set_refresh_cookies(response, refresh_token)
+    except KeyError:
+        pass
+    except TypeError:
+        pass
+
+    return response
