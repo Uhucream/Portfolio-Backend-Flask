@@ -5,6 +5,7 @@ Flask-JWT-Extended
 Flask-Migrate
 Flask-Seeder
 Flask-SQLAlchemy
+Flask-AlchemyDumps
 gunicorn
 ipwhois
 psycopg2
