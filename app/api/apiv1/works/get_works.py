@@ -19,16 +19,16 @@ def get_all_works():
             content, status_code, mimetype)
 
         return response
-    else:
-        converted_records_list = list(map(lambda record: record.to_dict(), record_list))
 
-        content = json.dumps(converted_records_list, ensure_ascii=False)
-        status_code = 200
-        mimetype = 'application/json;charset=UTF-8'
-        response = create_response.create_response(
-            content, status_code, mimetype)
+    converted_records_list = list(map(lambda record: record.to_dict(), record_list))
 
-        return response
+    content = json.dumps(converted_records_list, ensure_ascii=False)
+    status_code = 200
+    mimetype = 'application/json;charset=UTF-8'
+    response = create_response.create_response(
+        content, status_code, mimetype)
+
+    return response
 
 
 @api.route('/my_work/<endpoint_uri>', methods=['GET'])
@@ -45,13 +45,13 @@ def get_one_work(endpoint_uri=None):
             content, status_code, mimetype)
 
         return response
-    else:
-        result_dict = record.to_dict()
 
-        content = json.dumps(result_dict, ensure_ascii=False)
-        status_code = 200
-        mimetype = 'application/json;charset=UTF-8'
-        response = create_response.create_response(
-            content, status_code, mimetype)
+    result_dict = record.to_dict()
 
-        return response
+    content = json.dumps(result_dict, ensure_ascii=False)
+    status_code = 200
+    mimetype = 'application/json;charset=UTF-8'
+    response = create_response.create_response(
+        content, status_code, mimetype)
+
+    return response
