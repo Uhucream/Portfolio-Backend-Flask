@@ -9,9 +9,9 @@ import create_response
 @api.route('/posts', methods=['GET'])
 def get_all_posts():
 
-    record_list = DailyReports.query.all()
+    records_list = DailyReports.query.all()
 
-    if len(record_list) == 0:
+    if len(records_list) == 0:
         content = json.dumps({'message': 'No Posts Found'})
         status_code = 404
 
@@ -20,7 +20,7 @@ def get_all_posts():
 
         return response
 
-    converted_records_list = list(map(lambda record: record.to_dict(), record_list))
+    converted_records_list = list(map(lambda record: record.to_dict(), records_list))
 
     content = json.dumps(converted_records_list, ensure_ascii=False)
     status_code = 200
