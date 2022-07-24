@@ -19,16 +19,16 @@ def get_all_posts():
             content, status_code)
 
         return response
-    else:
-        converted_records_list = list(map(lambda record: record.to_dict(), record_list))
 
-        content = json.dumps(converted_records_list, ensure_ascii=False)
-        status_code = 200
+    converted_records_list = list(map(lambda record: record.to_dict(), record_list))
 
-        response = create_response.create_response(
-            content, status_code)
+    content = json.dumps(converted_records_list, ensure_ascii=False)
+    status_code = 200
 
-        return response
+    response = create_response.create_response(
+        content, status_code)
+
+    return response
 
 
 @api.route('/post/<id>', methods=['GET'])
@@ -45,13 +45,13 @@ def get_one_post(id=None):
             content, status_code)
 
         return response
-    else:
-        result_dict = record.to_dict()
 
-        content = json.dumps(result_dict, ensure_ascii=False)
-        status_code = 200
+    result_dict = record.to_dict()
 
-        response = create_response.create_response(
-            content, status_code)
+    content = json.dumps(result_dict, ensure_ascii=False)
+    status_code = 200
 
-        return response
+    response = create_response.create_response(
+        content, status_code)
+
+    return response
