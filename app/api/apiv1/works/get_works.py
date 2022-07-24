@@ -20,12 +20,9 @@ def get_all_works():
 
         return response
     else:
-        dict_list = []
-        for elem in record_list:
-            raw_dict = elem.to_dict()
-            dict_list.append(raw_dict)
+        converted_records_list = list(map(lambda record: record.to_dict(), record_list))
 
-        content = json.dumps(dict_list, ensure_ascii=False)
+        content = json.dumps(converted_records_list, ensure_ascii=False)
         status_code = 200
         mimetype = 'application/json;charset=UTF-8'
         response = create_response.create_response(
