@@ -1,8 +1,10 @@
 import os
+from typing import TypedDict
+from flask import Config as FlaskConfig
 from database.postgresql import SQLALCHEMY_DATABASE_URI as DATABASE_URI
 basedir = os.path.abspath(os.path.dirname('__file__'))
 
-class Config:
+class Config(FlaskConfig):
     ENV='production'
     SQLALCHEMY_DATABASE_URI = DATABASE_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = True
@@ -26,13 +28,19 @@ class DevelopmentConfig(Config):
     JWT_COOKIE_SECURE = False
     ENV='development'
     DEBUG = True
-    
 
 class TestingConfig(Config):
     ENV='testing'
     TESTING = True
 
-config = {
+class ConfigDictType(TypedDict):
+    development: DevelopmentConfig
+    testing: TestingConfig
+    production: ProductionConfig
+
+    default: ProductionConfig
+
+config: ConfigDictType = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig,

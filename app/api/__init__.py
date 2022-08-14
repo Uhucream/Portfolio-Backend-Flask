@@ -8,6 +8,7 @@ from flask_migrate import Migrate
 import sys
 import os
 from pathlib import *
+from typing import Literal
 from flask_jwt_extended import JWTManager
 from flask_seeder import FlaskSeeder
 from flask_httpauth import HTTPBasicAuth
@@ -28,7 +29,7 @@ seeder = FlaskSeeder()
 alchemydumps = AlchemyDumps()
 
 
-def create_app(config_name):
+def create_app(config_name: Literal['development', 'testing', 'production', 'default']):
     app = Flask(__name__)
     app.config.from_object(config.config[config_name])
 
