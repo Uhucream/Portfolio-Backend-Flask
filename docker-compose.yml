@@ -15,7 +15,7 @@ services:
       POSTGRES_PASSWORD: 'develop'
 
   flask:
-    build: 
+    build:
       context: .
       dockerfile: docker/python/Dockerfile
     container_name: portfolio-flask
@@ -40,7 +40,7 @@ services:
     command: /bin/sh -c "/usr/src/app/migrate.sh && gunicorn -c gunicorn_settings.py application:app"
     depends_on:
       - db
-  
+
   web:
     image: nginx
     container_name: portfolio-web
