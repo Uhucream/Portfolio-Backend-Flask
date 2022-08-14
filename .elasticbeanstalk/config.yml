@@ -1,0 +1,20 @@
+branch-defaults:
+  feat/add-type-all-files:
+    environment: Portfolio-Backend-Flask
+    group_suffix: null
+  main:
+    environment: Portfolio-Backend-Flask
+global:
+  application_name: Portfolio-Backend-Flask
+  branch: null
+  default_ec2_keyname: aws-flask-eb
+  default_platform: Docker running on 64bit Amazon Linux 2
+  default_region: us-west-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  repository: null
+  sc: git
+  workspace_type: Application
